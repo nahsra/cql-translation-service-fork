@@ -65,7 +65,7 @@ public class TranslationResourceTest {
     // dependency on jersey-media-json module in pom.xml and Main.startServer())
     // --
     // c.configuration().enable(new org.glassfish.jersey.media.json.JsonJaxbFeature());
-    target = c.target(Main.BASE_URI);
+    target = c.target(Main.BASE_URI.replace("0.0.0.0", "localhost"));
   }
 
   @After
@@ -232,7 +232,7 @@ public class TranslationResourceTest {
     JsonObject obj = reader.readObject();
     JsonObject library = obj.getJsonObject("library");
     JsonArray annotations = library.getJsonArray("annotation");
-    assertEquals(1, annotations.size());
+    assertEquals(2, annotations.size());
     JsonObject identifier = library.getJsonObject("identifier");
     assertEquals("CMS146", identifier.getString("id"));
     assertEquals("2", identifier.getString("version"));
@@ -360,13 +360,13 @@ public class TranslationResourceTest {
         	parseAndValidateXml( part, "CMS146", "2", 0 );
         } else if( part.getMediaType().equals( MediaType.valueOf( TranslationResource.ELM_JSON_TYPE ) ) ) {
         	parseAndValidateJson( part, "CMS146", "2", 0 );
-        } else { 
+        } else {
           fail( "Unsupported media type" );
         }
       }
     }
   }
-  
+
   private Document parseAndValidateXml( BodyPart input, String expectedId, String expectedVersion, int expectedErrors ) throws Exception {
       Document doc = parseXml(input.getEntityAs(String.class));
       String errorCount = applyXPath(doc, "count(/elm:library/elm:annotation[@errorType='syntax'])");
@@ -375,13 +375,13 @@ public class TranslationResourceTest {
       assertEquals("2", applyXPath(doc, "/elm:library/elm:identifier/@version") );
       return doc;
   }
-  
+
   private JsonObject parseAndValidateJson( BodyPart input, String expectedId, String expectedVersion, int expectedErrors ) {
       JsonReader reader = Json.createReader( new StringReader(input.getEntityAs(String.class)) );
       JsonObject obj = reader.readObject();
       JsonObject library = obj.getJsonObject("library");
       JsonArray annotations = library.getJsonArray("annotation");
-      if( expectedErrors == 0 ) { 
+      if( expectedErrors == 0 ) {
     	  assertEquals(1, annotations.size() );
       } else {
     	  assertEquals( expectedErrors + 1, annotations.size() );
@@ -389,7 +389,7 @@ public class TranslationResourceTest {
       JsonObject identifier = library.getJsonObject("identifier");
       assertEquals( expectedId, identifier.getString("id"));
       assertEquals( expectedVersion, identifier.getString("version"));
-      
+
       return library;
   }
 
