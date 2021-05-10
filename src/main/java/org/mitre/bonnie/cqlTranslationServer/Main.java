@@ -26,7 +26,7 @@ public class Main {
   // Base URI the Grizzly HTTP server will listen on
 
   // Must be 0.0.0.0 and not "localhost" to allow binding to other available network interfaces.
-  public static final String BASE_URI = "http://0.0.0.0:8080/cql/";
+  public static final String BASE_URI = String.format("http://0.0.0.0:%s/cql", System.getenv().getOrDefault("PORT", "8080"));
 
   /**
    * Starts Grizzly HTTP server exposing JAX-RS resources defined in this
