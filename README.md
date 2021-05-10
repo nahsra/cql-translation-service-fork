@@ -186,6 +186,10 @@ To build your own image:
 
 	docker build -t cqframework/cql-translation-service:latest . # but use your your own repo and tag strings!
 
+## Environment Variables
+
+**CQL_TRANSLATOR_PORT** - Allows you to set the port on which the translation service runs, default value is 8080
+
 ## License
 
 Copyright 2016-2019 The MITRE Corporation
