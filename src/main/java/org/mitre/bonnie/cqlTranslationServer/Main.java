@@ -50,8 +50,8 @@ public class Main {
   /**
    * Main method.
    *
-   * @param args
-   * @throws IOException
+   * @param args arguments
+   * @throws IOException Unable to read
    */
   public static void main(String[] args) throws IOException {
     final HttpServer server = startServer();
