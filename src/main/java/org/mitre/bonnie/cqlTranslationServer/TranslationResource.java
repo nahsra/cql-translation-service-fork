@@ -159,13 +159,13 @@ public class TranslationResource {
       for (String key: params.keySet()) {
         if (PARAMS_TO_OPTIONS_MAP.containsKey(key) && Boolean.parseBoolean(params.getFirst(key))) {
           optionsList.addAll(PARAMS_TO_OPTIONS_MAP.get(key));
-        } else if (key.equals("validate-units") && Boolean.parseBoolean(params.getFirst(key))) {
+        } else if ("validate-units".equals(key) && Boolean.parseBoolean(params.getFirst(key))) {
           try {
             ucumService = new UcumEssenceService(UcumEssenceService.class.getResourceAsStream("/ucum-essence.xml"));
           } catch (UcumException e) {
             throw new TranslationFailureException("Cannot load UCUM service to validate units");
           }
-        } else if (key.equals("signatures")) {
+        } else if ("signatures".equals(key)) {
           signatureLevel = LibraryBuilder.SignatureLevel.valueOf(params.getFirst("signatures"));
         }
       }
