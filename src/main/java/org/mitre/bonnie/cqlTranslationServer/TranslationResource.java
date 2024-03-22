@@ -152,7 +152,6 @@ public class TranslationResource {
   private CqlTranslator getTranslator(File cql, MultivaluedMap<String, String> params) {
     try {
       //LibrarySourceLoader.registerProvider(
-      //        new DefaultLibrarySourceProvider(cql.toPath().getParent()));
       UcumService ucumService = null;
       LibraryBuilder.SignatureLevel signatureLevel = LibraryBuilder.SignatureLevel.None;
       List<Options> optionsList = new ArrayList<>();
@@ -172,7 +171,6 @@ public class TranslationResource {
       Options[] options = optionsList.toArray(new Options[optionsList.size()]);
       return CqlTranslator.fromFile(cql, modelManager, libraryManager, ucumService, CqlTranslatorException.ErrorSeverity.Info,
               signatureLevel, options);
-      //LibrarySourceLoader.clearProviders();
     } catch (IOException e) {
       throw new TranslationFailureException("Unable to read request");
     }
